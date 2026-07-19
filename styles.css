@@ -125,43 +125,6 @@ button {
     opacity: 0;
 }
 
-/* Botón del último recuerdo */
-.boton-recuerdo {
-    position: relative;
-    z-index: 5;
-    display: none;
-    border: 0;
-    padding: 18px 24px;
-    background: transparent;
-    color: rgba(255, 255, 255, 0.82);
-    font-size: clamp(1.35rem, 3.5vw, 2.1rem);
-    letter-spacing: 0.03em;
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 2.5s ease, transform 2.5s ease, color 0.4s ease;
-}
-
-.boton-recuerdo.activo {
-    display: block;
-}
-
-.boton-recuerdo.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.boton-recuerdo:hover,
-.boton-recuerdo:focus-visible {
-    color: #fff;
-    outline: none;
-}
-
-.boton-recuerdo.oculto {
-    pointer-events: none;
-    opacity: 0;
-}
-
 /* Escena final */
 .escena-final {
     position: absolute;
@@ -208,10 +171,6 @@ button {
         max-height: 76vh;
     }
 
-    .boton-recuerdo {
-        width: 90%;
-        font-size: 1.45rem;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -221,4 +180,56 @@ button {
         animation-duration: 0.01ms !important;
         transition-duration: 0.01ms !important;
     }
+}
+
+/* Mensaje previo al recuerdo final */
+.frase.regalo {
+    font-size: clamp(1.35rem, 3.5vw, 2.2rem);
+    font-style: italic;
+    letter-spacing: 0.035em;
+}
+
+/* Solo aparece cuando el navegador bloquea el audio automático */
+.iniciar {
+    position: relative;
+    z-index: 20;
+    border: 0;
+    padding: 18px 26px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.86);
+    font-family: inherit;
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    opacity: 0;
+    animation: aparecer-inicio 2.2s ease forwards;
+}
+
+.iniciar:hover,
+.iniciar:focus-visible {
+    color: #fff;
+}
+
+.iniciar[hidden] {
+    display: none;
+}
+
+@keyframes aparecer-inicio {
+    to {
+        opacity: 1;
+    }
+}
+
+/* La imagen final nace como un recuerdo que cobra claridad */
+.foto-final {
+    filter: blur(18px) brightness(0.72);
+    transform: scale(1.035);
+    transition:
+        filter 5s ease,
+        transform 5s ease;
+}
+
+.escena-final.visible .foto-final {
+    filter: blur(0) brightness(1);
+    transform: scale(1);
 }

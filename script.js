@@ -1,8 +1,8 @@
 const frase = document.getElementById("frase");
 const contenedorFoto = document.getElementById("contenedorFoto");
-const botonRecuerdo = document.getElementById("botonRecuerdo");
 const escenaFinal = document.getElementById("escenaFinal");
-const musicaFinal = document.getElementById("musicaFinal");
+const musicaFondo = document.getElementById("musicaFondo");
+const botonIniciar = document.getElementById("iniciar");
 
 const escenas = [
     {
@@ -52,6 +52,8 @@ const escenas = [
     }
 ];
 
+let experienciaIniciada = false;
+
 function esperar(milisegundos) {
     return new Promise((resolve) => setTimeout(resolve, milisegundos));
 }
@@ -60,27 +62,25 @@ function cambiarEtapaFoto(etapa) {
     contenedorFoto.className = `contenedor-foto ${etapa}`;
 }
 
-async function mostrarFrase(texto, duracion, claseFinal = false) {
+async function mostrarFrase(texto, duracion, claseFinal = false, claseRegalo = false) {
     frase.textContent = texto;
     frase.classList.toggle("final", claseFinal);
+    frase.classList.toggle("regalo", claseRegalo);
     frase.classList.add("visible");
 
     await esperar(duracion);
 
     frase.classList.remove("visible");
     await esperar(1900);
+
+    frase.classList.remove("final", "regalo");
 }
 
-async function mostrarBotonFinal() {
-    botonRecuerdo.classList.add("activo");
-    await esperar(50);
-    botonRecuerdo.classList.add("visible");
-}
-
-function subirVolumen(audio, volumenFinal = 0.34, duracion = 5000) {
+function subirVolumen(audio, volumenFinal = 0.32, duracion = 3500) {
     audio.volume = 0;
+
     const intervalo = 100;
-    const pasos = Math.max(1, duracion / intervalo);
+    const pasos = Math.max(1, Math.round(duracion / intervalo));
     const incremento = volumenFinal / pasos;
 
     const temporizador = setInterval(() => {
@@ -92,27 +92,19 @@ function subirVolumen(audio, volumenFinal = 0.34, duracion = 5000) {
     }, intervalo);
 }
 
-async function abrirUltimoRecuerdo() {
-    botonRecuerdo.disabled = true;
-    botonRecuerdo.classList.add("oculto");
-
-    await esperar(2200);
-
-    escenaFinal.setAttribute("aria-hidden", "false");
-
-    try {
-        musicaFinal.currentTime = 0;
-        await musicaFinal.play();
-        subirVolumen(musicaFinal);
-    } catch (error) {
-        console.error("No se pudo reproducir la música:", error);
-    }
-
-    await esperar(1800);
-    escenaFinal.classList.add("visible");
+async function iniciarMusica() {
+    musicaFondo.currentTime = 0;
+    musicaFondo.volume = 0;
+    await musicaFondo.play();
+    subirVolumen(musicaFondo);
 }
 
 async function comenzarAurora() {
+    if (experienciaIniciada) return;
+    experienciaIniciada = true;
+
+    botonIniciar.hidden = true;
+
     cambiarEtapaFoto("etapa-1");
     await esperar(3000);
 
@@ -129,28 +121,56 @@ async function comenzarAurora() {
 
     await mostrarFrase(
         "A veces, sin darnos cuenta, alguien decide caminar a nuestro lado, permanecer en los momentos que más pesan y recorrer ese camino con nosotros.",
-        9000
+        6500
     );
 
     await esperar(1200);
 
     await mostrarFrase(
         "Y cuando el camino vuelva a sentirse pesado... siempre habrá alguien dispuesto a recorrerlo contigo, sin importar la distancia.",
-        7000,
+        6000,
         true
     );
 
-    await esperar(3500);
-    await mostrarBotonFinal();
+    await esperar(1800);
+
+    await mostrarFrase(
+        "Hay un pequeño regalo para ti.",
+        3800,
+        false,
+        true
+    );
+
+    await esperar(1000);
+
+    escenaFinal.setAttribute("aria-hidden", "false");
+    escenaFinal.classList.add("visible");
 }
 
-botonRecuerdo.addEventListener("click", abrirUltimoRecuerdo, { once: true });
+async function iniciarExperiencia() {
+    // Los navegadores bloquean el audio con sonido si no existe
+    // una interacción previa del usuario. Por eso mostramos un
+    // botón inicial y empezamos música + experiencia con el mismo toque.
+    botonIniciar.hidden = false;
+}
 
-musicaFinal.addEventListener("ended", async () => {
+botonIniciar.addEventListener("click", async () => {
+    botonIniciar.disabled = true;
+
+    try {
+        await iniciarMusica();
+        await comenzarAurora();
+    } catch (error) {
+        botonIniciar.disabled = false;
+        botonIniciar.textContent = "Toca otra vez para comenzar";
+    }
+});
+
+musicaFondo.addEventListener("ended", async () => {
     escenaFinal.classList.add("desvanecer");
     await esperar(8000);
     escenaFinal.classList.remove("visible");
     escenaFinal.setAttribute("aria-hidden", "true");
 });
 
-window.addEventListener("load", comenzarAurora);
+window.addEventListener("load", iniciarExperiencia);
