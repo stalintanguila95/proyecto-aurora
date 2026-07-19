@@ -2,18 +2,12 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto Aurora</title>
-
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <main class="experiencia">
+    <main class="experiencia" aria-live="polite">
         <div id="contenedorFoto" class="contenedor-foto">
             <img
                 src="imagenes/recuerdo.jpg"
@@ -23,6 +17,22 @@
         </div>
 
         <p id="frase" class="frase"></p>
+
+        <button id="botonRecuerdo" class="boton-recuerdo" type="button">
+            Un último recuerdo
+        </button>
+
+        <section id="escenaFinal" class="escena-final" aria-hidden="true">
+            <img
+                src="imagenes/ultimo-recuerdo.png"
+                alt="Un último recuerdo al atardecer"
+                class="foto-final"
+            >
+        </section>
+
+        <audio id="musicaFinal" preload="auto">
+            <source src="audio/goodbye.mp3" type="audio/mpeg">
+        </audio>
     </main>
 
     <script src="script.js"></script>

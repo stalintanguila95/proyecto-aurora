@@ -12,93 +12,71 @@ body {
 
 body {
     overflow: hidden;
-    background-color: #000;
+    background: #000;
     color: #fff;
     font-family: Georgia, "Times New Roman", serif;
 }
 
+button {
+    font: inherit;
+}
+
 .experiencia {
     position: relative;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 100%;
     min-height: 100vh;
-
     padding: 30px;
-    background-color: #000;
+    overflow: hidden;
+    background: #000;
 }
 
-/* Fotografía situada detrás del texto */
-
+/* Fotografía principal */
 .contenedor-foto {
     position: absolute;
     inset: 0;
     z-index: 1;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     opacity: 0;
-
     transition: opacity 3.5s ease;
 }
 
 .fotografia {
     display: block;
-
     max-width: min(88vw, 900px);
     max-height: 82vh;
-
     border-radius: 8px;
-
     filter: blur(32px) brightness(0.28);
     transform: scale(1.08);
-
-    transition:
-        filter 3.5s ease,
-        transform 3.5s ease;
+    transition: filter 3.5s ease, transform 3.5s ease;
 }
-
-/* Oscurece la foto mientras hay texto */
 
 .contenedor-foto::after {
     content: "";
     position: absolute;
     inset: 0;
-
-    background-color: rgba(0, 0, 0, 0.72);
-
+    background: rgba(0, 0, 0, 0.72);
     transition: background-color 3.5s ease;
 }
 
-/* Texto */
-
+/* Frases */
 .frase {
     position: relative;
-    z-index: 2;
-
+    z-index: 3;
     width: min(900px, 90%);
-
     font-size: clamp(1.4rem, 4vw, 2.45rem);
     font-weight: 400;
     line-height: 1.6;
     letter-spacing: 0.02em;
     text-align: center;
-
     opacity: 0;
     transform: translateY(12px);
-
-    text-shadow:
-        0 2px 10px rgba(0, 0, 0, 1),
-        0 0 25px rgba(0, 0, 0, 0.9);
-
-    transition:
-        opacity 2.2s ease,
-        transform 2.2s ease;
+    text-shadow: 0 2px 10px #000, 0 0 25px rgba(0, 0, 0, 0.9);
+    transition: opacity 2.2s ease, transform 2.2s ease;
 }
 
 .frase.visible {
@@ -107,85 +85,28 @@ body {
 }
 
 .frase.final {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    letter-spacing: 0.06em;
+    font-size: clamp(1.7rem, 4.5vw, 3rem);
 }
 
 /* Revelado progresivo */
-
-.contenedor-foto.etapa-1 {
-    opacity: 0.05;
-}
-
-.contenedor-foto.etapa-1 .fotografia {
-    filter: blur(32px) brightness(0.28);
-}
-
-.contenedor-foto.etapa-2 {
-    opacity: 0.11;
-}
-
-.contenedor-foto.etapa-2 .fotografia {
-    filter: blur(28px) brightness(0.34);
-}
-
-.contenedor-foto.etapa-3 {
-    opacity: 0.19;
-}
-
-.contenedor-foto.etapa-3 .fotografia {
-    filter: blur(24px) brightness(0.4);
-}
-
-.contenedor-foto.etapa-4 {
-    opacity: 0.28;
-}
-
-.contenedor-foto.etapa-4 .fotografia {
-    filter: blur(20px) brightness(0.48);
-}
-
-.contenedor-foto.etapa-5 {
-    opacity: 0.38;
-}
-
-.contenedor-foto.etapa-5 .fotografia {
-    filter: blur(16px) brightness(0.57);
-}
-
-.contenedor-foto.etapa-6 {
-    opacity: 0.5;
-}
-
-.contenedor-foto.etapa-6 .fotografia {
-    filter: blur(12px) brightness(0.67);
-}
-
-.contenedor-foto.etapa-7 {
-    opacity: 0.63;
-}
-
-.contenedor-foto.etapa-7 .fotografia {
-    filter: blur(8px) brightness(0.77);
-}
-
-.contenedor-foto.etapa-8 {
-    opacity: 0.77;
-}
-
-.contenedor-foto.etapa-8 .fotografia {
-    filter: blur(5px) brightness(0.87);
-}
-
-.contenedor-foto.etapa-9 {
-    opacity: 0.9;
-}
-
-.contenedor-foto.etapa-9 .fotografia {
-    filter: blur(2px) brightness(0.95);
-}
-
-/* La fotografía queda completamente sola */
+.contenedor-foto.etapa-1 { opacity: 0.05; }
+.contenedor-foto.etapa-1 .fotografia { filter: blur(32px) brightness(0.28); }
+.contenedor-foto.etapa-2 { opacity: 0.11; }
+.contenedor-foto.etapa-2 .fotografia { filter: blur(28px) brightness(0.34); }
+.contenedor-foto.etapa-3 { opacity: 0.19; }
+.contenedor-foto.etapa-3 .fotografia { filter: blur(24px) brightness(0.40); }
+.contenedor-foto.etapa-4 { opacity: 0.28; }
+.contenedor-foto.etapa-4 .fotografia { filter: blur(20px) brightness(0.48); }
+.contenedor-foto.etapa-5 { opacity: 0.38; }
+.contenedor-foto.etapa-5 .fotografia { filter: blur(16px) brightness(0.57); }
+.contenedor-foto.etapa-6 { opacity: 0.50; }
+.contenedor-foto.etapa-6 .fotografia { filter: blur(12px) brightness(0.67); }
+.contenedor-foto.etapa-7 { opacity: 0.63; }
+.contenedor-foto.etapa-7 .fotografia { filter: blur(8px) brightness(0.77); }
+.contenedor-foto.etapa-8 { opacity: 0.77; }
+.contenedor-foto.etapa-8 .fotografia { filter: blur(5px) brightness(0.87); }
+.contenedor-foto.etapa-9 { opacity: 0.90; }
+.contenedor-foto.etapa-9 .fotografia { filter: blur(2px) brightness(0.95); }
 
 .contenedor-foto.etapa-final {
     opacity: 1;
@@ -197,13 +118,78 @@ body {
 }
 
 .contenedor-foto.etapa-final::after {
-    background-color: rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0);
 }
-
-/* Desaparición antes del cierre */
 
 .contenedor-foto.desvanecer {
     opacity: 0;
+}
+
+/* Botón del último recuerdo */
+.boton-recuerdo {
+    position: relative;
+    z-index: 5;
+    display: none;
+    border: 0;
+    padding: 18px 24px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: clamp(1.35rem, 3.5vw, 2.1rem);
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 2.5s ease, transform 2.5s ease, color 0.4s ease;
+}
+
+.boton-recuerdo.activo {
+    display: block;
+}
+
+.boton-recuerdo.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.boton-recuerdo:hover,
+.boton-recuerdo:focus-visible {
+    color: #fff;
+    outline: none;
+}
+
+.boton-recuerdo.oculto {
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* Escena final */
+.escena-final {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 5s ease;
+}
+
+.escena-final.visible {
+    opacity: 1;
+}
+
+.escena-final.desvanecer {
+    opacity: 0;
+    transition-duration: 8s;
+}
+
+.foto-final {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
 }
 
 @media (max-width: 600px) {
@@ -213,12 +199,26 @@ body {
 
     .frase {
         width: 94%;
-        font-size: 1.4rem;
+        font-size: 1.35rem;
         line-height: 1.55;
     }
 
     .fotografia {
         max-width: 92vw;
         max-height: 76vh;
+    }
+
+    .boton-recuerdo {
+        width: 90%;
+        font-size: 1.45rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
     }
 }
